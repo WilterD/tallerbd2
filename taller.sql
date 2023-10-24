@@ -48,7 +48,6 @@ CREATE TABLE especialidades (
   grado_especialidad INT NOT NULL
 );
 
-
 CREATE TABLE jugadores (
   id_jugador SERIAL PRIMARY KEY,
   nombre VARCHAR(50),
@@ -64,17 +63,70 @@ CREATE TABLE jugadores (
 );
 
 
-
-
 -- Tabla de clasificaciones
 CREATE TABLE clasificaciones (
-  id_clasificacion INT PRIMARY KEY,
+  id_clasificacion SERIAL PRIMARY KEY,
   id_club INT,
   id_competicion INT,
   posicion INT NOT NULL,
   FOREIGN KEY (id_club) REFERENCES clubes(id_club),
   FOREIGN KEY (id_competicion) REFERENCES competiciones(id_competicion)
 );
+
+
+CREATE TABLE contrataciones (
+  id_contratacion SERIAL PRIMARY KEY,
+  id_persona INT,
+  ic_club INT,
+  fecha_contratacion DATE NOT NULL,
+  fecha_baja DATE,
+  importe DECIMAL(10, 2),
+  FOREIGN KEY (id_persona) REFERENCES jugadores(id_jugador) ON DELETE CASCADE,
+  FOREIGN KEY (id_persona) REFERENCES entrenadores(id_entrenador) ON DELETE CASCADE,
+  FOREIGN KEY (id_club) REFERENCES clubes(id_club)
+);
+
+CREATE TABLE ofertas (
+  id_oferta SERIAL PRIMARY KEY,
+  id_persona INT, 
+  id_club INT,
+  fecha_oferta DATE NOT NULL,
+  importe DECIMAL(10, 2), 
+  FOREIGN KEY (id_persona) REFERENCES jugadores(id_Jugador) ON DELETE CASCADE,
+  FOREIGN KEY (id_persona) REFERENCES entrenadores(id_entrenador) ON DELETE CASCADE,
+  FOREIGN KEY (id_club) REFERENCES clubes(id_club)
+);
+
+-- TRIGGERS
+
+-- CREATE OR REPLACE FUNCTION registro_contratacion()
+-- RETURNS TRIGGER AS $$
+-- BEGIN
+--   INSERT INTO contrataciones (id_persona, id_club, fecha_contratacion, importe)
+--   VALUES (NEW.id_persona, NEW.id_club, NEW.fecha_contratacion, NEW.importe);
+--   RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- CREATE TRIGGER registro_contratacion_trigger
+-- AFTER INSERT ON contrataciones_temp
+-- FOR EACH ROW
+-- EXECUTE FUNCTION registro_contratacion();
+
+-- CREATE OR REPLACE FUNCTION registro_oferta()
+-- RETURNS TRIGGER AS $$
+-- BEGIN
+--   INSERT INTO ofertas (id_persona, id_club, fecha_oferta, importe)
+--   VALUES (NEW.id_persona, NEW.id_club, NEW.fecha_oferta, NEW.importe);
+--   RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- CREATE TRIGGER registro_oferta_trigger
+-- AFTER INSERT ON ofertas
+-- FOR EACH ROW
+-- EXECUTE FUNCTION registro_oferta();
+
 
 COMMIT;
 
