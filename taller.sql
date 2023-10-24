@@ -1,21 +1,28 @@
 BEGIN;
 
 CREATE TABLE competiciones (
-  id_competicion INT PRIMARY KEY,
+  id_competicion SERIAL PRIMARY KEY,
   nombre VARCHAR(50),
   fecha_inicio DATE,
   fecha_fin DATE,
   temporada VARCHAR(10) NOT NULL
 );
 
+CREATE TABLE partidos (
+    id_partido SERIAL PRIMARY KEY,
+    id_club_local int NOT NULL,
+    id_club_visitante int NOT NULL,
+    fecha_creacion DATE NOT NULL
+);
+
 CREATE TABLE federaciones (
-    id_federacion INT PRIMARY KEY,
+    id_federacion SERIAL PRIMARY KEY,
     nombre_federacion VARCHAR(255) NOT NULL,
     fecha_creacion DATE NOT NULL
 );
 
 CREATE TABLE clubes (
-  id_club INT PRIMARY KEY,
+  id_club SERIAL PRIMARY KEY,
   nombre_club VARCHAR(50) NOT NULL,
   num_socios INT NOT NULL,
   id_entrenador INT,
@@ -25,7 +32,7 @@ CREATE TABLE clubes (
 );
 
 CREATE TABLE entrenadores (
-  id_entrenador INT PRIMARY KEY,
+  id_entrenador SERIAL PRIMARY KEY,
   nombre VARCHAR(50) NOT NULL,
   direccion VARCHAR(100) NOT NULL,
   telefono VARCHAR(20) NOT NULL,
@@ -36,14 +43,14 @@ CREATE TABLE entrenadores (
 );
 
 CREATE TABLE especialidades (
-  id_especialidad INT PRIMARY KEY,
+  id_especialidad SERIAL PRIMARY KEY,
   nombre_especialidad VARCHAR(50) NOT NULL,
   grado_especialidad INT NOT NULL
 );
 
 
 CREATE TABLE jugadores (
-  id_jugador INT PRIMARY KEY,
+  id_jugador SERIAL PRIMARY KEY,
   nombre VARCHAR(50),
   fecha_nacimiento DATE NOT NULL,
   posicion VARCHAR(50),
@@ -55,6 +62,7 @@ CREATE TABLE jugadores (
   FOREIGN KEY (id_club) REFERENCES clubes(id_club),
   FOREIGN KEY (id_especialidad) REFERENCES especialidades(id_especialidad)
 );
+
 
 
 
