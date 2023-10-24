@@ -1,0 +1,21 @@
+a) Un directivo de un club de fútbol quiere disponer de una base de datos que le permita controlar datos que le interesan sobre competiciones, clubes, jugadores, entrenadores, etc. de
+ámbito estatal.
+b) Los clubes disputan cada temporada varias competiciones (liga, copa, etc.) entre sí. Nuestro directivo desea información histórica de las clasificaciones obtenidas por los clubes en las
+diferentes competiciones a lo largo de todas las temporadas. La clasificación se especificará
+mediante un número de posición: 1 significa campeón, 2 significa subcampeón, etc.
+c) Los distintos clubes están agrupados en las federaciones regionales correspondientes. Toda
+federación tiene como mínimo un club. Quiere saber el nombre y la fecha de creación de las
+federaciones así como el nombre y el número de socios de los clubes.
+d) Es muy importante la información sobre jugadores y entrenadores. Se identificarán por un
+código, y quiere saber el nombre, la dirección, el número de teléfono y la fecha de nacimiento de todos. Es necesario mencionar que algunos entrenadores pueden haber sido jugadores
+en su juventud. De los jugadores, además, quiere saber el peso, la altura, la especialidad o las
+especialidades y qué dominio tienen de ellas (grado de especialidad). Todo jugador debe tener como mínimo una especialidad, pero puede haber especialidades en las que no haya ningún jugador. De los entrenadores le interesa la fecha en que iniciaron su carrera como
+entrenadores de fútbol.
+e) De todas las personas que figuran en la base de datos (jugadores y entrenadores), quiere conocer el historial de contrataciones por parte de los diferentes clubes, incluyendo el importe y
+la fecha de baja de cada contratación. En un momento determinado, una persona puede estar
+contratada por un único club, pero puede cambiar de club posteriormente e, incluso, puede
+volver a un club en el que ya había trabajado.
+f) También quiere registrar las ofertas que las personas que figuran en la base de datos han
+recibido de los clubes durante su vida deportiva (y de las que se ha enterado). Considera básico tener constancia del importe de las ofertas. Se debe tener en cuenta que, en un momento
+determinado, una persona puede recibir muchas ofertas, siempre que provengan de clubes
+distintos.
