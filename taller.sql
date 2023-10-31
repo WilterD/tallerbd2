@@ -85,15 +85,14 @@ CREATE TABLE COMPITEN (
 CREATE TABLE CONTRATAN (
     codigoEmpleado INTEGER NOT NULL,
     codigoClub INTEGER NOT NULL,
-    fechaBaja DATE NOT NULL,
+    fecha_baja DATE NOT NULL,
     importe FLOAT NOT NULL,
     CONSTRAINT pk_contratan PRIMARY KEY(codigoEmpleado,codigoClub,fecha_baja),
     CONSTRAINT fk_emp FOREIGN KEY (codigoEmpleado) REFERENCES EMPLEADOS(codigo),
     CONSTRAINT fk_cod_club FOREIGN KEY (codigoClub) REFERENCES CLUBES(codigoClub)
 );
 
-
--- Crear un trigger que actualice la cantidad de juegos ganados de un club cuando se ingresa un resultado en COMPITEN.
+-- La función que actualizará la cantidad de juegos ganados de un club.
 CREATE OR REPLACE FUNCTION actualizarJuegosGanados() RETURNS TRIGGER AS $$
 BEGIN
     -- Si el clubGanador es el primer club (pClub), se incrementa en 1 la cantidad de juegos ganados.
@@ -103,16 +102,15 @@ BEGIN
         WHERE codigoClub = NEW.clubGanador AND temporada = NEW.temporada AND competicion = NEW.competicion;
     END IF;
 
-    -- Si el clubGanador es el segundo club (sClub), no se modifica la cantidad de juegos ganados.
-
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
--- Crear el trigger que ejecutará la función al insertar o actualizar la tabla COMPITEN.
 CREATE TRIGGER trig_actualizar_juegosganados
 AFTER INSERT OR UPDATE ON COMPITEN
 FOR EACH ROW
-EXECUTE FUNCTION actualizarJuegosGanados;
+EXECUTE PROCEDURE actualizarJuegosGanados();
+
+
 
 COMMIT;
