@@ -92,11 +92,15 @@ CREATE TABLE CONTRATAN (
     CONSTRAINT fk_cod_club FOREIGN KEY (codigoClub) REFERENCES CLUBES(codigoClub)
 );
 
--- La función que actualizará la cantidad de juegos ganados de un club.
 CREATE OR REPLACE FUNCTION actualizarJuegosGanados() RETURNS TRIGGER AS $$
 BEGIN
     -- Si el clubGanador es el primer club (pClub), se incrementa en 1 la cantidad de juegos ganados.
     IF NEW.clubGanador = NEW.pClub THEN
+        UPDATE JUEGOSGANADOS
+        SET cantidad = cantidad + 1
+        WHERE codigoClub = NEW.clubGanador AND temporada = NEW.temporada AND competicion = NEW.competicion;
+    ELSE
+        -- Si el clubGanador es el segundo club (sClub), se actualiza la cantidad de juegos ganados.
         UPDATE JUEGOSGANADOS
         SET cantidad = cantidad + 1
         WHERE codigoClub = NEW.clubGanador AND temporada = NEW.temporada AND competicion = NEW.competicion;
@@ -110,6 +114,7 @@ CREATE TRIGGER trig_actualizar_juegosganados
 AFTER INSERT OR UPDATE ON COMPITEN
 FOR EACH ROW
 EXECUTE PROCEDURE actualizarJuegosGanados();
+
 
 
 
