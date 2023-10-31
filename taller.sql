@@ -95,10 +95,20 @@ CREATE TABLE CONTRATAN (
 -- La función que actualizará la cantidad de juegos ganados de un club.
 CREATE OR REPLACE FUNCTION actualizarJuegosGanados() RETURNS TRIGGER AS $$
 BEGIN
-    -- Si el clubGanador es el primer club (pClub), se incrementa en 1 la cantidad de juegos ganados.
+    -- Verificar si existe una tupla con esos datos, de lo contrario, insertar una nueva.
+    PERFORM 1
+    FROM JUEGOSGANADOS
+    WHERE codigoClub = NEW.clubGanador AND temporada = NEW.temporada AND competicion = NEW.competicion;
+
+    IF NOT FOUND THEN
+        INSERT INTO JUEGOSGANADOS (codigoClub, temporada, competicion, cantidad)
+        VALUES (NEW.clubGanador, NEW.temporada, NEW.competicion, 1);
+    ELSE
+        -- Si el clubGanador es el primer club (pClub), se incrementa en 1 la cantidad de juegos ganados.
         UPDATE JUEGOSGANADOS
         SET cantidad = cantidad + 1
         WHERE codigoClub = NEW.clubGanador AND temporada = NEW.temporada AND competicion = NEW.competicion;
+    END IF;
 
     RETURN NEW;
 END;
